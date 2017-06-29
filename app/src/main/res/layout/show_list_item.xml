@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--<LinearLayout-->
+<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--android:layout_width="match_parent"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:orientation="horizontal">-->
+
+<!--<ImageView-->
+<!--android:id="@+id/imageViewRV"-->
+<!--android:layout_width="wrap_content"-->
+<!--android:layout_height="wrap_content"-->
+<!--android:src="@drawable/coctail_ic"-->
+<!--android:layout_gravity="left|center_vertical" />-->
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="4dp"
+    android:background="#191919"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="10"
+        android:background="#191919"
+        >
+        <ImageView
+            android:id="@+id/imageList"
+            android:layout_width="260px"
+            android:layout_height="295px"
+            android:paddingTop="8dp"
+            android:layout_gravity="center_horizontal"/>
+        <TextView
+            android:id="@+id/nameList"
+            android:layout_width="260px"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/white"
+            android:paddingBottom="8dp"/>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>
+    <!--</LinearLayout>-->

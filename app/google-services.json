@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "869393014644",
+    "firebase_url": "https://tvmanager-802e1.firebaseio.com",
+    "project_id": "tvmanager-802e1",
+    "storage_bucket": "tvmanager-802e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869393014644:android:141bc81c2f01e14d",
+        "android_client_info": {
+          "package_name": "com.example.android.tvmanager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "869393014644-64f8ass7ackqndctmmi2si9k62ciqibo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.tvmanager",
+            "certificate_hash": "daa31947645958fa31d3a9256b7afa21552774c4"
+          }
+        },
+        {
+          "client_id": "869393014644-ir54cuioqb4ae4861gbbsvgbuvagb6ha.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7c2QfN56-GiSkQrfq2WaN1hq7zmeNSrA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "869393014644-ir54cuioqb4ae4861gbbsvgbuvagb6ha.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
