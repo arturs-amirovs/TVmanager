@@ -11,14 +11,14 @@ import org.json.JSONObject;
 public class GetSeriesInformation extends AsyncTask<Void, Void, Void> {
 
     private String TAG = "State messsage: ";
-    private String searchText;
-    private String name;
-    private String summary;
-    private String status;
+    private String searchText = "";
+    private String name = "";
+    private String summary = "";
+    private String status = "";
     private String genres = "";
-    private String image;
-    private String premiered;
-    private String rating;
+    private String image = "";
+    private String premiered = "";
+    private String rating = "";
 
     private NetworkListenerInterface listener;
 
@@ -109,18 +109,17 @@ public class GetSeriesInformation extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void result) {
         super.onPostExecute(result);
-//        dataSource.addDetails(placeID, placeAddress, phoneNumber, workHours, website, rating);
-//        Log.e("added Details: ", ">>>>---------------------------------------------<<<<");
-//        listener.onTaskCompleted();
         Log.e("JSON", "PARSED");
         ShowDetails.getInstance().setName(name);
-        summary = summary.replaceAll("<p>", "");
-        summary = summary.replaceAll("</p>", "");
-        summary = summary.replaceAll("<b>", "");
-        summary = summary.replaceAll("</b>", "");
-        summary = summary.replaceAll("<i>", "");
-        summary = summary.replaceAll("</i>", "");
-        summary = summary.replaceAll("<br>", "");
+        if(summary != null) {
+            summary = summary.replaceAll("<p>", "");
+            summary = summary.replaceAll("</p>", "");
+            summary = summary.replaceAll("<b>", "");
+            summary = summary.replaceAll("</b>", "");
+            summary = summary.replaceAll("<i>", "");
+            summary = summary.replaceAll("</i>", "");
+            summary = summary.replaceAll("<br>", "");
+        }
         ShowDetails.getInstance().setSummary(summary);
         ShowDetails.getInstance().setStatus(status);
         ShowDetails.getInstance().setPremiered(premiered);
@@ -128,5 +127,6 @@ public class GetSeriesInformation extends AsyncTask<Void, Void, Void> {
         ShowDetails.getInstance().setRating(rating);
         ShowDetails.getInstance().setImage(image);
         listener.onTaskCompleted();
+
     }
 }

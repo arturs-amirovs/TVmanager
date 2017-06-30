@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class ShowDetailsActivity extends AppCompatActivity implements NetworkListenerInterface, View.OnClickListener {
+public class ShowDetailsActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView showName;
     private TextView summary;
     private TextView premiered;
@@ -34,6 +34,8 @@ public class ShowDetailsActivity extends AppCompatActivity implements NetworkLis
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("shows");
     DatabaseReference userRef = database.getReference("users");
+    DatabaseReference currentUserRef = userRef.child(User.getCurrentUser().getUid());
+    final DatabaseReference favoriteShow = currentUserRef.child("favorite");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +47,10 @@ public class ShowDetailsActivity extends AppCompatActivity implements NetworkLis
         myToolbar.setTitleTextColor(Color.WHITE);
 
 
-        search = getIntent().getStringExtra(SEARCH_TEXT);
-        Log.e("SAERCH TEXT : ", search);
+//        search = getIntent().getStringExtra(SEARCH_TEXT);
+//        Log.e("SAERCH TEXT : ", search);
 
-        new GetSeriesInformation(search, ShowDetailsActivity.this).execute();
+//        new GetSeriesInformation(search, ShowDetailsActivity.this).execute();
 //        showName = (TextView) findViewById(R.id.showName);
         summary = (TextView) findViewById(R.id.summary);
         premiered = (TextView) findViewById(R.id.premiered);
@@ -58,6 +60,8 @@ public class ShowDetailsActivity extends AppCompatActivity implements NetworkLis
         imageView=(ImageView) findViewById(R.id.image);
         favoriteButton = (Button) findViewById(R.id.favoriteButton);
         favoriteButton.setOnClickListener(this);
+        setViews();
+
 
     }
     public void setViews(){
@@ -71,18 +75,23 @@ public class ShowDetailsActivity extends AppCompatActivity implements NetworkLis
         new ImageLoadTask(ShowDetails.getInstance().getImage(), imageView).execute();
         DatabaseReference showRef = myRef.child(ShowDetails.getInstance().getName());
         showRef.setValue(ShowDetails.getInstance());
+        setFavoriteButton();
     }
 
-    @Override
-    public void onTaskCompleted() {
-        setViews();
-    }
+//    @Override
+//    public void onTaskCompleted() {
+//        if(ShowDetails.getInstance().Filled())
+//            setViews();
+//        else {
+//            finish();
+//        }
+//    }
 
     @Override
     public void onClick(View v) {
         if(v.getId() == R.id.favoriteButton){
-            DatabaseReference currentUserRef = userRef.child(User.getCurrentUser().getUid());
-            final DatabaseReference favoriteShow = currentUserRef.child("favorite");
+//            DatabaseReference currentUserRef = userRef.child(User.getCurrentUser().getUid());
+//            final DatabaseReference favoriteShow = currentUserRef.child("favorite");
 
 
             favoriteShow.addValueEventListener(new ValueEventListener() {
@@ -117,4 +126,26 @@ public class ShowDetailsActivity extends AppCompatActivity implements NetworkLis
 
         }
     }
+     public void setFavoriteButton(){
+         favoriteShow.addValueEventListener(new ValueEventListener() {
+             @Override
+             public void onDataChange(DataSnapshot dataSnapshot) {
+                 if(!dataSnapshot.child(ShowDetails.getInstance().getName()).exists()){
+                     favoriteButton.setText("Add to favorite");
+//                     favoriteShow.removeEventListener(this);
+//                     return;
+
+                 }else if(dataSnapshot.child(ShowDetails.getInstance().getName()).exists()){
+                     favoriteButton.setText("Remove from favorite");
+//                     favoriteShow.removeEventListener(this);
+//                     return;
+                 }
+             }
+
+             @Override
+             public void onCancelled(DatabaseError databaseError) {
+
+             }
+         });
+     }
 }

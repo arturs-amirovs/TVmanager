@@ -25,6 +25,23 @@ class ShowDetails {
         return mInstance;
     }
 
+    public Boolean Filled(){
+        if(name == "" && summary == "" && image == ""){
+            return false;
+        }
+        return true;
+    }
+
+    public void setDefault() {
+        name = "";
+        premiered = "";
+        status = "";
+        summary = "";
+        genres = "";
+        rating = "";
+        image = "";
+    }
+
     public String getName() {
         return name;
     }

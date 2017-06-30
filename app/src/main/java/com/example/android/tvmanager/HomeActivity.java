@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -20,9 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static com.example.android.tvmanager.ShowDetailsActivity.SEARCH_TEXT;
-
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, NetworkListenerInterface {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("shows");
@@ -39,7 +38,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
@@ -47,11 +46,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.searchButton).setOnClickListener(this);
         findViewById(R.id.signoutButton).setOnClickListener(this);
         categoryLVList = (GridView) findViewById(R.id.categoryLVList);
+
+        categoryLVList.setOnItemClickListener(HomeActivity.this);
         favoriteShow.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(final DataSnapshot dataSnapshot) {
+
+
+
                 showList = new ArrayList<>();
-                for (DataSnapshot messageSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot messageSnapshot : dataSnapshot.getChildren()) {
                     ShowDetailsClass details = new ShowDetailsClass();
                     details.setName(messageSnapshot.child("name").getValue().toString());
                     details.setPremiered(messageSnapshot.child("premiered").getValue().toString());
@@ -63,10 +67,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     Log.e("data", details.getName());
                     showList.add(details);
                 }
-
                 listAdapter = new ViewAdapter(HomeActivity.this, showList);
                 categoryLVList.setAdapter(listAdapter);
-                categoryLVList.setOnItemClickListener(HomeActivity.this);
+
 //                LinearLayoutManager layoutManager
 //                        = new LinearLayoutManager(HomeActivity.this, LinearLayoutManager.HORIZONTAL, false);
 //
@@ -79,12 +82,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
+
         });
 
-
-
-
     }
+
 
     @Override
     public void onClick(View v) {
@@ -99,18 +102,25 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void searchShow(String search){
-        newActivity(search);
+        new GetSeriesInformation(search, HomeActivity.this).execute();
+
     }
 
-    public void newActivity(String search) {
+    public void newActivity() {
         Intent intent = new Intent(this, ShowDetailsActivity.class);
-        intent.putExtra("search", search);
         startActivity(intent);
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         TextView text = (TextView)view.findViewById(R.id.nameList);
-        startActivity(new Intent(this, ShowDetailsActivity.class).putExtra(SEARCH_TEXT, text.getText().toString()));
+//        startActivity(new Intent(this, ShowDetailsActivity.class).putExtra(SEARCH_TEXT, text.getText().toString()));
+        searchShow(text.getText().toString());
+    }
+
+    @Override
+    public void onTaskCompleted() {
+        if(ShowDetails.getInstance().Filled())
+            newActivity();
     }
 }
