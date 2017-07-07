@@ -23,12 +23,12 @@ import java.util.ArrayList;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener, AdapterView.OnItemClickListener, NetworkListenerInterface {
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference myRef = database.getReference("shows");
-    DatabaseReference userRef = database.getReference("users");
-    DatabaseReference currentUserRef = userRef.child(User.getCurrentUser().getUid());
-    final DatabaseReference favoriteShow = currentUserRef.child("favorite");
-    ArrayList<ShowDetailsClass> showList = new ArrayList<>();
+    private FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private DatabaseReference myRef = database.getReference("shows");
+    private DatabaseReference userRef = database.getReference("users");
+    private DatabaseReference currentUserRef = userRef.child(User.getCurrentUser().getUid());
+    private final DatabaseReference favoriteShow = currentUserRef.child("favorite");
+    private ArrayList<ShowDetailsClass> showList = new ArrayList<>();
 
     private ViewAdapter listAdapter;
     private GridView categoryLVList;
@@ -102,6 +102,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void searchShow(String search){
+        ShowDetails.getInstance().setDefault();
         new GetSeriesInformation(search, HomeActivity.this).execute();
 
     }
@@ -122,5 +123,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onTaskCompleted() {
         if(ShowDetails.getInstance().Filled())
             newActivity();
+        else
+            findViewById(R.id.errorText).setVisibility(View.VISIBLE);
     }
 }

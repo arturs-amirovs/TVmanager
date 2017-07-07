@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +25,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements View.OnCli
     private TextView rating;
     private TextView genres;
     private ImageView imageView;
-    private Button favoriteButton;
+    private ImageView favoriteButton;
     private Bitmap bitmap;
     private String search;
     private String url = "https://developer.android.com/_static/images/android/touchicon-180.png";
@@ -58,7 +57,7 @@ public class ShowDetailsActivity extends AppCompatActivity implements View.OnCli
         genres = (TextView) findViewById(R.id.genres);
         rating = (TextView) findViewById(R.id.rating);
         imageView=(ImageView) findViewById(R.id.image);
-        favoriteButton = (Button) findViewById(R.id.favoriteButton);
+        favoriteButton = (ImageView) findViewById(R.id.favoriteButton);
         favoriteButton.setOnClickListener(this);
         setViews();
 
@@ -131,12 +130,12 @@ public class ShowDetailsActivity extends AppCompatActivity implements View.OnCli
              @Override
              public void onDataChange(DataSnapshot dataSnapshot) {
                  if(!dataSnapshot.child(ShowDetails.getInstance().getName()).exists()){
-                     favoriteButton.setText("Add to favorite");
+                     favoriteButton.setImageResource(R.drawable.ic_favorite_border_white_24dp);
 //                     favoriteShow.removeEventListener(this);
 //                     return;
 
                  }else if(dataSnapshot.child(ShowDetails.getInstance().getName()).exists()){
-                     favoriteButton.setText("Remove from favorite");
+                     favoriteButton.setImageResource(R.drawable.ic_favorite_white_24dp);
 //                     favoriteShow.removeEventListener(this);
 //                     return;
                  }

@@ -23,7 +23,17 @@
         android:titleTextColor="@android:color/white"
         android:elevation="4dp"
         android:theme="@style/toolbar_theme"
-        app:popupTheme="@style/ThemeOverlay.AppCompat" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat">
+
+        <ImageView
+            android:id="@+id/favoriteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_favorite_white_24dp" />
+
+    </android.support.v7.widget.Toolbar>
         <!--<TextView-->
             <!--android:id="@+id/showName"-->
             <!--android:layout_width="wrap_content"-->
@@ -70,12 +80,6 @@
             android:layout_alignParentRight="true"/>
 
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/favoriteButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add/Remove to/from favorite"/>
 
     <TextView
         android:id="@+id/summary"

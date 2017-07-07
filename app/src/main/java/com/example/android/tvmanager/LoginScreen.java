@@ -124,9 +124,4 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
     }
 
-    public void newActivity() {
-        startActivity(new Intent(this, HomeActivity.class));
-        finish();
-    }
-
 }

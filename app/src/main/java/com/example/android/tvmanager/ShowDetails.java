@@ -26,7 +26,7 @@ class ShowDetails {
     }
 
     public Boolean Filled(){
-        if(name == "" && summary == "" && image == ""){
+        if(name.equals("") && summary.equals("") && image.equals("")){
             return false;
         }
         return true;

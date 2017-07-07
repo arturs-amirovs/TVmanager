@@ -98,7 +98,6 @@ public class GetSeriesInformation extends AsyncTask<Void, Void, Void> {
 
         } else {
             Log.e(TAG, "Couldn't get json from server.");
-
         }
 
 
@@ -111,7 +110,7 @@ public class GetSeriesInformation extends AsyncTask<Void, Void, Void> {
         super.onPostExecute(result);
         Log.e("JSON", "PARSED");
         ShowDetails.getInstance().setName(name);
-        if(summary != null) {
+        if(!summary.equals("")) {
             summary = summary.replaceAll("<p>", "");
             summary = summary.replaceAll("</p>", "");
             summary = summary.replaceAll("<b>", "");
